@@ -1,10 +1,10 @@
 let express = require('express')
 let db = require('../models')
-let Student = db.students
+let Student = db.Students
 
 let router = express.Router()
 
-router.get('/students', function (req,
+router.get('/Students', function (req,
                                   res,
                                   next){
     Student.findAll().then(students => {
@@ -12,7 +12,7 @@ router.get('/students', function (req,
     })
 })
 
-router.post('/students', function (req,res,next){
+router.post('/Students', function (req,res,next){
     Student.create( req.body ).then(data => {
         return res.status(201).send('ok')
     })

@@ -21,10 +21,7 @@ export default {
   name: 'app',
   data() {
     return {
-      students: [
-        { name: 'Example', 'starID': 'aa1234aa', present: true },
-        { name: 'Test', 'starID': 'bb5678bb', present: false },
-      ],
+      students: [],
       mostRecentStudent: {}
     }
   },
@@ -33,28 +30,22 @@ export default {
     StudentTable,
     StudentMessage
   },
+  mounted() {
+    this.updateStudents()
+  },
   methods: {
-    newStudentAdded(student) {
-      this.students.push(student)
-      this.students.sort(function(s1, s2) {
-        return s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1
-      })
+
+    newStudentAdded(Student) {
     },
-    studentArrivedOrLeft(student, present) {
-      // find student in this.students, set present value 
-      let updateStudent = this.students.find( function(s) {
-        if (s.name === student.name && s.starID === student.starID) {
-          return true
-        }
-      })
-      if (updateStudent) {
-        updateStudent.present = present
-        this.mostRecentStudent = student
-      }
+    studentArrivedOrLeft(Student, present) {
+      // find student in this.students, set present value
     },
     studentDeleted(student) {
-      this.students = this.students.filter( function(s) { return s != student })
-      this.mostRecentStudent = {}   // clears welcome/goodbye message
+    },
+    updateStudents() {
+      this.$student_api.getAllStudents().then(students => {
+        this.students = students
+      })
     }
   }
 }
