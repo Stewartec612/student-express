@@ -36,11 +36,25 @@ export default {
   methods: {
 
     newStudentAdded(Student) {
+      this.$student_api.addStudent(Student).then( () => {
+        this.updateStudents()
+      })
+
     },
     studentArrivedOrLeft(Student, present) {
+      Student.present = present
+
       // find student in this.students, set present value
+      this.$student_api.updateStudent(Student).then( () => {
+        this.mostRecentStudent = Student
+        this.updateStudents()
+      })
     },
-    studentDeleted(student) {
+    studentDeleted(Student) {
+      this.$student_api.deleteStudent(Student.id).then( () => {
+        this.updateStudents()
+        this.mostRecentStudent = {} //clears welcome/goodbye message
+      })
     },
     updateStudents() {
       this.$student_api.getAllStudents().then(students => {

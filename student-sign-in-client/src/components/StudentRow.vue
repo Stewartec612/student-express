@@ -1,5 +1,5 @@
 <template>
-  <tr v-bind:class="{ present: student.present, absent: !student.present }">    
+  <tr v-bind:class="{ present: student.present, absent: !student.present }">
     <td>{{ student.name }}</td>
     <td>{{ student.starID }}</td>
     <td><input type="checkbox" v-bind:checked="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)"></td>

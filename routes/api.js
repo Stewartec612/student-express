@@ -1,6 +1,6 @@
 let express = require('express')
 let db = require('../models')
-let Student = db.Students
+let Student = db.Student
 
 let router = express.Router()
 
@@ -18,4 +18,21 @@ router.post('/Students', function (req,res,next){
     })
 })
 
+//todo delete function
+router.patch('/Students/:id',function (req,res,next){
+    let studentID = req.parameters.id
+    let updateStudent = req.body
+    Student.update(updateStudent, {where: {id: studentID} } ).then( () => {
+        return res.send('ok')
+    })
+})
+
+router.delete('/students/:id',function (req,res,next){
+    let studentID = req.parameters.id
+    Student.destroy( {where: {id: studentID} }).then( () =>{
+        return res.send('ok')
+    })
+})
+
 module.exports = router
+//all type under here will bne ignored
